@@ -1,0 +1,3 @@
+conda create --name evidai --clone base
+conda activate avidai
+pip install evidently
