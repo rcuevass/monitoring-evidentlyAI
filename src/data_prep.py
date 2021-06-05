@@ -4,29 +4,43 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, auc
+
 
 
 def encode_features_ohe(feature_names: list, data_frame):
+    """
+    Function that performs one hot encoding to a set of features provided as a list
+    :param feature_names: list capturing the features to be encoded
+    :param data_frame: dataframe capturing the data
+    :return: data_frame: input data_frame after encoding of features
+    """
     for feature_name in feature_names:
-        one_hot = pd.get_dummies(data_frame[feature_name])
-        data_frame = data_frame.drop(feature_name, axis=1)
-        data_frame = data_frame.join(one_hot)
+        try:
+            one_hot = pd.get_dummies(data_frame[feature_name])
+            data_frame = data_frame.drop(feature_name, axis=1)
+            data_frame = data_frame.join(one_hot)
+        except:
+            print('Feature ', feature_name, 'may not be part of dataset')
+
     return data_frame
 
 
 df = pd.read_csv('../data/input/archive/adult.csv')
 df = encode_features_ohe(['race', 'gender', 'workclass'], df)
-
-
 df['income'] = df['income'].map({'<=50K': 0, '>50K': 1})
 
-x = df[['age', 'educational-num', 'capital-gain', 'capital-loss',
-       'hours-per-week', 'Amer-Indian-Eskimo', 'Asian-Pac-Islander', 'Black',
-        'Other', 'White', 'Female', 'Male', '?', 'Federal-gov', 'Local-gov',
-        'Never-worked', 'Private', 'Self-emp-inc', 'Self-emp-not-inc', 'State-gov', 'Without-pay']]
-y = df['income']
+
+df_train, df_test = train_test_split(df, test_size=0.4, random_state=2021)
+df_test_ref, df_test_prod = train_test_split(df_test, test_size=0.5, random_state=2021)
+df_train.to_csv('../data/input/train.csv')
+df_test_ref.to_csv('../data/input/test_reference.csv')
+df_test_prod.to_csv('../data/input/test_prod.csv')
 
 
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
+print(df.shape)
+print(df_train.shape)
+print(df_test.shape)
+print(df_test_prod.shape)
+print(df_test_ref.shape)
+
+
