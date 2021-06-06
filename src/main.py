@@ -9,11 +9,11 @@ from evidently.tabs import DataDriftTab
 
 df_reference = pd.read_csv('../data/input/test_reference.csv')
 df_reference = df_reference.select_dtypes(include='number')
-df_prod = pd.read_csv('../data/input/test_prod.csv')
-df_prod = df_prod.select_dtypes(include='number')
+df_prod_unforced = pd.read_csv('../data/input/test_prod_forced.csv')
+df_prod_unforced = df_prod_unforced.select_dtypes(include='number')
 
 data_drift_report = Dashboard(tabs=[DataDriftTab])
-data_drift_report.calculate(reference_data=df_reference, production_data=df_prod, column_mapping=None)
+data_drift_report.calculate(reference_data=df_reference, production_data=df_prod_unforced, column_mapping=None)
 data_drift_report.save('../reports/drift_report.html')
 
 
