@@ -7,12 +7,13 @@ from evidently.dashboard import Dashboard
 # from evidently.tabs import DriftTab
 from evidently.tabs import DataDriftTab
 
-iris = datasets.load_iris()
-iris_frame = pd.DataFrame(iris.data, columns=iris.feature_names)
+df_reference = pd.read_csv('../data/input/test_reference.csv')
+df_reference = df_reference.select_dtypes(include='number')
+df_prod = pd.read_csv('../data/input/test_prod.csv')
+df_prod = df_prod.select_dtypes(include='number')
 
-iris_data_drift_report = Dashboard(tabs=[DataDriftTab])
-iris_data_drift_report.calculate(iris_frame[:100], iris_frame[100:], column_mapping=None)
-
-iris_data_drift_report.save('../reports/my_report.html')
+data_drift_report = Dashboard(tabs=[DataDriftTab])
+data_drift_report.calculate(reference_data=df_reference, production_data=df_prod, column_mapping=None)
+data_drift_report.save('../reports/drift_report.html')
 
 
