@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, roc_auc_score
 import pickle
 

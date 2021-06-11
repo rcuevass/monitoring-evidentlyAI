@@ -1,5 +1,4 @@
-import pandas as pd
-from sklearn import datasets
+from drift_assessment import read_ref_prod_drift_score
 
 from evidently.dashboard import Dashboard
 
@@ -7,13 +6,8 @@ from evidently.dashboard import Dashboard
 # from evidently.tabs import DriftTab
 from evidently.tabs import DataDriftTab
 
-df_reference = pd.read_csv('../data/input/test_reference.csv')
-df_reference = df_reference.select_dtypes(include='number')
-df_prod_unforced = pd.read_csv('../data/input/test_prod_forced.csv')
-df_prod_unforced = df_prod_unforced.select_dtypes(include='number')
 
-data_drift_report = Dashboard(tabs=[DataDriftTab])
-data_drift_report.calculate(reference_data=df_reference, production_data=df_prod_unforced, column_mapping=None)
-data_drift_report.save('../reports/drift_report.html')
-
-
+read_ref_prod_drift_score(path_pkl_model='../models/knn_clf.pkl',
+                          path_ref_csv='../data/input/test_reference.csv',
+                          path_prod_csv='../data/input/test_prod_forced.csv',
+                          html_report_name='drift_report.html')

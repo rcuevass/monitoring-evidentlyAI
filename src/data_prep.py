@@ -1,8 +1,4 @@
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 from sklearn.model_selection import train_test_split
 
 
@@ -24,19 +20,20 @@ def encode_features_ohe(feature_names: list, data_frame):
     return data_frame
 
 
-def force_drift(data_frame, dict_drift_num: dict):
+def force_drift(data_frame, list_drift_num: list):
     """
     Function that adds a ad-hoc number set by the user to numerical features
     :param data_frame: data frame capturing the data that captures the data to be modified
-    :param dict_drift_num: dictionary capturing the numerical features to be shifted as keys and amount by which
-                            the shift will take place as values. dict[num_feat] = shift_amount
+    :param list_drift_num: list capturing the numerical features to be modified
     :return: data_frame: data frame with modified distribution
     """
 
     data_frame_out = data_frame.copy()
-    for feat_num in dict_drift_num.keys():
-        val_to_add = dict_drift_num[feat_num]
-        data_frame_out[feat_num] += val_to_add
+    for feat_num in list_drift_num:
+        # get mean and std of column
+        mean_ = data_frame[feat_num].mean()
+        std_ = data_frame[feat_num].std()
+        data_frame_out[feat_num] = round(mean_-20, 0)
 
     return data_frame_out
 
@@ -48,7 +45,7 @@ df['income'] = df['income'].map({'<=50K': 0, '>50K': 1})
 
 df_train, df_test = train_test_split(df, test_size=0.4, random_state=2021)
 df_test_ref, df_test_prod_unforced = train_test_split(df_test, test_size=0.5, random_state=2021)
-df_test_prod_forced = force_drift(df_test_prod_unforced, dict_drift_num={'age': 3, 'hours-per-week': -2})
+df_test_prod_forced = force_drift(df_test_prod_unforced, list_drift_num=['age'])
 
 df_train.to_csv('../data/input/train.csv', index=False)
 df_test_ref.to_csv('../data/input/test_reference.csv', index=False)
