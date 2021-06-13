@@ -7,11 +7,12 @@ from evidently.dashboard import Dashboard
 # from evidently.tabs import DriftTab
 from evidently.tabs import DataDriftTab
 
-from training import get_np_array_from_df
-from data_read import read_csv_select_type
+from model_development.training import get_np_array_from_df
+from data_read_prep.data_read import read_csv_select_type
 
 
-def read_ref_prod_drift_score(path_pkl_model: str, path_ref_csv: str, path_prod_csv: str, html_report_name: str):
+def read_ref_prod_drift_score(path_pkl_model: str, path_ref_csv: str, path_prod_csv: str,
+                              html_report_name: str = 'drift_report.html'):
     df_reference = read_csv_select_type(path_to_csv_file=path_ref_csv)
     df_prod = read_csv_select_type(path_to_csv_file=path_prod_csv)
 

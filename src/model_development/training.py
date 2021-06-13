@@ -72,8 +72,8 @@ def train_store_model(path_csv_train: str, path_csv_test: str, path_name_pkl_tra
     return dict_acc_auc
 
 
-dict_performance = train_store_model(path_csv_train='../data/input/train.csv',
-                                     path_csv_test='../data/input/test_reference.csv',
-                                     path_name_pkl_trained='../models/knn_clf.pkl')
+dict_performance = train_store_model(path_csv_train='../../data/input/train.csv',
+                                     path_csv_test='../../data/input/test_reference.csv',
+                                     path_name_pkl_trained='../../models/knn_clf.pkl')
 
 print(dict_performance)

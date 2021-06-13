@@ -38,7 +38,7 @@ def force_drift(data_frame, list_drift_num: list):
     return data_frame_out
 
 
-df = pd.read_csv('../data/input/archive/adult.csv')
+df = pd.read_csv('../../data/input/archive/adult.csv')
 df = encode_features_ohe(['race', 'gender', 'workclass'], df)
 df['income'] = df['income'].map({'<=50K': 0, '>50K': 1})
 
