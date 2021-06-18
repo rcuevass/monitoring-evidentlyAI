@@ -35,27 +35,3 @@ def force_drift(data_frame, list_drift_num: list):
         data_frame_out[feat_num] = round(mean_-20, 0)
 
     return data_frame_out
-
-
-#df = pd.read_csv('../../data/input/archive/adult.csv')
-#df = encode_features_ohe(['race', 'gender', 'workclass'], df)
-#df['income'] = df['income'].map({'<=50K': 0, '>50K': 1})
-
-
-#df_train, df_test = train_test_split(df, test_size=0.4, random_state=2021)
-#df_test_ref, df_test_prod_unforced = train_test_split(df_test, test_size=0.5, random_state=2021)
-#df_test_prod_forced = force_drift(df_test_prod_unforced, list_drift_num=['age'])
-
-#df_train.to_csv('../data/input/train.csv', index=False)
-#df_test_ref.to_csv('../data/input/test_reference.csv', index=False)
-#df_test_prod_unforced.to_csv('../data/input/test_prod_unforced.csv', index=False)
-#df_test_prod_forced.to_csv('../data/input/test_prod_forced.csv', index=False)
-
-
-#print(df.shape)
-#print(df_train.shape)
-#print(df_test.shape)
-#print(df_test_prod_unforced.shape)
-#print(df_test_ref.shape)
-
-
