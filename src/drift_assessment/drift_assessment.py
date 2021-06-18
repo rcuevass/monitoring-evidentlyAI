@@ -14,6 +14,7 @@ log_ = get_log_object_named('drift')
 
 
 def read_ref_prod_drift_score(path_pkl_model: str, path_ref_csv: str, path_prod_csv: str,
+                              list_features_drift_report: list,
                               html_report_name: str = 'drift_report.html'):
 
     log_.info('reading csv file for reference data and selecting numeric features only, read from=%s', path_ref_csv)
@@ -24,7 +25,10 @@ def read_ref_prod_drift_score(path_pkl_model: str, path_ref_csv: str, path_prod_
     log_.info('Instantiating object for data drift report...')
     data_drift_report = Dashboard(tabs=[DataDriftTab])
     log_.info('performing calculations to generate report...')
-    data_drift_report.calculate(reference_data=df_reference, production_data=df_prod, column_mapping=None)
+    log_.info('drift report to be generated on features=%s', str(list_features_drift_report))
+    data_drift_report.calculate(reference_data=df_reference[list_features_drift_report],
+                                production_data=df_prod[list_features_drift_report],
+                                column_mapping=None)
     log_.info('saving data drift report to=%s', '../reports/' + html_report_name)
     data_drift_report.save('../reports/' + html_report_name)
 
