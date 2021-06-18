@@ -24,7 +24,8 @@ def main():
     log_.info('Reading reference and prod data and scoring...')
     read_ref_prod_drift_score(path_pkl_model='../models/knn_clf.pkl',
                               path_ref_csv='../data/input/test_reference.csv',
-                              path_prod_csv='../data/input/test_prod_forced.csv')
+                              path_prod_csv='../data/input/test_prod_forced.csv',
+                              list_features_drift_report=['age'])
 
 
 if __name__ == '__main__':
