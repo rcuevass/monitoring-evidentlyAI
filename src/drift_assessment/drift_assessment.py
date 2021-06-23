@@ -9,13 +9,15 @@ from evidently.tabs import DataDriftTab
 
 from model_development.training import get_np_array_from_df
 from data_read_prep.data_read import read_csv_select_type
+import imgkit
+
 
 log_ = get_log_object_named('drift')
 
 
 def read_ref_prod_drift_score(path_pkl_model: str, path_ref_csv: str, path_prod_csv: str,
                               list_features_drift_report: list,
-                              html_report_name: str = 'drift_report.html'):
+                              html_report_name: str = 'drift_report'):
 
     log_.info('reading csv file for reference data and selecting numeric features only, read from=%s', path_ref_csv)
     df_reference = read_csv_select_type(path_to_csv_file=path_ref_csv)
@@ -29,8 +31,14 @@ def read_ref_prod_drift_score(path_pkl_model: str, path_ref_csv: str, path_prod_
     data_drift_report.calculate(reference_data=df_reference[list_features_drift_report],
                                 production_data=df_prod[list_features_drift_report],
                                 column_mapping=None)
-    log_.info('saving data drift report to=%s', '../reports/' + html_report_name)
-    data_drift_report.save('../reports/' + html_report_name)
+    log_.info('saving data drift report to=%s', '../reports/' + html_report_name + '.html')
+    data_drift_report.save('../reports/' + html_report_name + '.html')
+
+    # turning html report into jpg image
+    # log_.info('Turning html report into jpg...')
+    # imgkit.from_file('../reports/' + html_report_name + '.html',
+    #                 '../reports/' + html_report_name + '.jpg')
+    # log_.info('html report has been turned into jpg...')
 
     log_.info('Loading pickle file with trained data from =%s', path_pkl_model)
     clf_ = pickle.load(open(path_pkl_model, 'rb'))
