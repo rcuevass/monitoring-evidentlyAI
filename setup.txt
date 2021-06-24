@@ -1,3 +1,4 @@
 conda create --name evidai --clone base
-conda activate avidai
+conda activate evidai
 pip install evidently
+pip install imgkit

@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def encode_features_ohe(feature_names: list, data_frame):
+def encode_features_ohe(feature_names: list, data_frame: pd.DataFrame) -> pd.DataFrame:
     """
     Function that performs one hot encoding to a set of features provided as a list
     :param feature_names: list capturing the features to be encoded
@@ -19,7 +19,7 @@ def encode_features_ohe(feature_names: list, data_frame):
     return data_frame
 
 
-def force_drift(data_frame, list_drift_num: list):
+def force_drift(data_frame, list_drift_num: list) -> pd.DataFrame:
     """
     Function that adds a ad-hoc number set by the user to numerical features
     :param data_frame: data frame capturing the data that captures the data to be modified
